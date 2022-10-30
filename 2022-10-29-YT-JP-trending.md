@@ -563,8 +563,19 @@ JP_nocomm_top100_view_ntrending <- JP_nocomm_top100_view %>%
             sum_view = sum(view_count)) %>%
   arrange(desc(v_ntrending))
 
-View(JP_nocomm_top100_view_ntrending)
+head(JP_nocomm_top100_view_ntrending)
 ```
+
+    ## # A tibble: 6 × 4
+    ##   title                                                  chann…¹ v_ntr…² sum_v…³
+    ##   <chr>                                                  <chr>     <int>   <dbl>
+    ## 1 [CHOREOGRAPHY] BTS (방탄소년단) 'Butter' Special Perf… BANGTA…      15  5.40e8
+    ## 2 [CHOREOGRAPHY] BTS (방탄소년단) 'Butter' Dance Practi… BANGTA…      12  3.82e8
+    ## 3 BTS (방탄소년단) 'Butter' @ Billboard Music Awards     BANGTA…       8  3.06e8
+    ## 4 LISA - 'MONEY' EXCLUSIVE PERFORMANCE VIDEO             BLACKP…       7  3.20e8
+    ## 5 BLACKPINK - ‘Pink Venom’ DANCE PRACTICE VIDEO          BLACKP…       6  2.24e8
+    ## 6 Kendrick Lamar - The Heart Part 5                      Kendri…       6  1.58e8
+    ## # … with abbreviated variable names ¹​channelTitle, ²​v_ntrending, ³​sum_view
 
 #### 3-2-3. Paid by ad views
 
