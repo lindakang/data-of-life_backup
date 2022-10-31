@@ -292,7 +292,8 @@ CA_video_30trending
     ##              title vtrending_n video_views_sum category channelTitle
     ## 1 Starlink Mission         101        78914625  Science       SpaceX
 
-SpaceX’s Starlink Mission is the one on Trending most frequent.
+SpaceX’s Starlink Mission is the only video that was on trending for
+more than a month, actually on trending for 3 months.
 
 #### 3-1-2. Highest views
 
@@ -559,8 +560,18 @@ CA_nocomm_top100_view_ntrending <- CA_nocomm_top100_view %>%
             sum_view = sum(view_count)) %>%
   arrange(desc(v_ntrending))
 
-View(CA_nocomm_top100_view_ntrending)
+head(CA_nocomm_top100_view_ntrending)
 ```
+
+    ## # A tibble: 6 × 4
+    ##   title                             channelTitle      v_ntrending  sum_view
+    ##   <chr>                             <chr>                   <int>     <dbl>
+    ## 1 Beach Money Ball!!💵🌊💵          Klem Family                 7 860340808
+    ## 2 so long nerds                     Technoblade                 7 412228488
+    ## 3 $456,000 Squid Game In Real Life! MrBeast                     6 628980776
+    ## 4 I Spent 50 Hours Buried Alive     MrBeast                     6 332408112
+    ## 5 A STORY ABOUT GREED 💸            Alan Chikin Chow            5 333470398
+    ## 6 AMONG US, but with 99 IMPOSTORS   The Pixel Kingdom           5 324397234
 
 #### 3-2-3. Paid by ad views
 

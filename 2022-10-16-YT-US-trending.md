@@ -269,7 +269,7 @@ Sports channels are on trending most frequent from 2020 to 2022.
 Note that both of MrBeast’s channels “MrBeast” and “MrBeast Gaming” were
 on trending \>400 times in 2021.
 
-Which videos are on trending for more than a month?
+Which videos are on trending for at least a month?
 
 ``` r
 # Videos on Trending for >30 days
@@ -315,7 +315,7 @@ US_video_30trending
     ## 11          31       146415814 Entertainment         SSSniperWolf
     ## 12          31       367867655        Sports         Liverpool FC
 
-SpaceX’s Starlink Mission is the one on Trending most frequent.
+SpaceX’s Starlink Mission was on trending for almost half an year.
 
 #### 3-1-2. Highest views
 
@@ -394,7 +394,7 @@ ggplot(US_channel_top100, aes(y = title, x = view_count, alpha = likes)) +
        y = 'YouTube videos')
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p6_top100-viewed-videos-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p06_top100-viewed-videos-1.png)<!-- -->
 
 4 / 15 videos of highest views are BTS, Black Pink and shorts.
 
