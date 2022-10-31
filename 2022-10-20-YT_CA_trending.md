@@ -1,13 +1,13 @@
-YouTube trending video data (3) - Japan
+YouTube trending data (2) - Canada
 ================
 
 ## US, Canada & Japan
 
 ### Background:
 
-This is just for practice and for fun and thus, will only focus on US,
-Canada and Japan YouTube channels. This will be divided into 3 parts so
-it won’t be too long.
+This is just for practice and for fun and thus, will only focus on the
+US, Canada and Japan YouTube channels. This will be divided into 3 parts
+so it won’t be too long.
 
 ### Dataset
 
@@ -26,8 +26,8 @@ List of YouTube videos that have been on daily trending list from
 ### YouTube Channel category
 
 ID - Category name<br> 1 - Film & Animation<br> 2 - Autos<br> 10 -
-Music<br> 15 - Pets & Animals<br> 17 - Sports<br> 19 - Travel &
-Events<br> 20 - Gaming<br> 21 - Vblogging<br> 22 - Blogs<br> 23 -
+Music<br> 15 - Pets & Animals<br> 17 - Sports<br> 19 - Travel
+&Events<br> 20 - Gaming<br> 21 - Vblogging<br> 22 - Blogs<br> 23 -
 Comedy<br> 24 - Entertainment<br> 25 - News & Politics<br> 26 - Howto &
 Style<br> 27 - Education<br> 28 - Science & Technology<br> 29 -
 Nonprofits & Activism<br> 43 - Shows<br>
@@ -79,12 +79,12 @@ library(lubridate)
 1-2. Import datasets
 
 ``` r
-JP <- read_csv("/Users/Linda/Desktop/RStudio/Kaggle/YouTube/JP_youtube_trending_data.csv")
+CA <- read_csv("/Users/Linda/Desktop/RStudio/Kaggle/YouTube/CA_youtube_trending_data.csv")
 ```
 
     ## Warning: One or more parsing issues, see `problems()` for details
 
-    ## Rows: 157186 Columns: 16
+    ## Rows: 157143 Columns: 16
     ## ── Column specification ────────────────────────────────────────────────────────
     ## Delimiter: ","
     ## chr  (7): video_id, title, channelId, channelTitle, tags, thumbnail_link, de...
@@ -100,19 +100,19 @@ JP <- read_csv("/Users/Linda/Desktop/RStudio/Kaggle/YouTube/JP_youtube_trending_
 2-1. Check for duplicates
 
 ``` r
-sum(duplicated(JP))  # 149 duplicate
+sum(duplicated(CA))  # 83 duplicate
 ```
 
-    ## [1] 149
+    ## [1] 109
 
 2-2. Remove duplicates
 
 ``` r
 # use distinct() to remove duplicates
-JP <- distinct(JP)
+CA <- distinct(CA)
 
 # check if it's removed
-sum(duplicated(JP))
+sum(duplicated(CA))
 ```
 
     ## [1] 0
@@ -125,7 +125,7 @@ trending_date, tags, views, likes, dislikes, comment_count
 ``` r
 # select columns we need for analysis
 # add a "category" column
-JP_data <- JP %>%
+CA_data <- CA %>%
   select(title, channelTitle, categoryId, trending_date, tags, view_count, likes, dislikes, comment_count) %>%
   mutate("category" = as.factor(categoryId)) %>%
   mutate(category = recode(category, "1" = "Film", "2" = "Autos", "10" = "Music", "15" = "Pets", 
@@ -134,27 +134,27 @@ JP_data <- JP %>%
                            "26" = "HowToD", "27" = "Education", "28" = "Science", "29" = "NPO"))
 
 # convert trending date to the date format
-JP_data$trending_date<- as.Date(JP_data$trending_date, format = "%y-%m-%d")
+CA_data$trending_date<- as.Date(CA_data$trending_date, format = "%y-%m-%d")
 
 # create a "trending _year" column
-JP_data <- JP_data %>%
+CA_data <- CA_data %>%
   mutate(trending_year = format(trending_date, format = '%Y'))
 
-glimpse(JP_data)
+glimpse(CA_data)
 ```
 
-    ## Rows: 157,037
+    ## Rows: 157,034
     ## Columns: 11
-    ## $ title         <chr> "皆からの色々な質問に何も隠さず答える！びっくりさせたら…
-    ## $ channelTitle  <chr> "タナカガ", "(パーソル パ・リーグTV公式)PacificLeagueTV"…
-    ## $ categoryId    <dbl> 22, 17, 23, 20, 1, 26, 10, 22, 10, 20, 24, 20, 10, 24, 2…
+    ## $ title         <chr> "Diljit Dosanjh: CLASH (Official) Music Video | G.O.A.T.…
+    ## $ channelTitle  <chr> "Diljit Dosanjh", "jacksepticeye", "Apex Legends", "Braw…
+    ## $ categoryId    <dbl> 10, 24, 20, 22, 26, 27, 17, 17, 22, 24, 24, 10, 24, 10, …
     ## $ trending_date <date> 2020-08-12, 2020-08-12, 2020-08-12, 2020-08-12, 2020-08…
-    ## $ tags          <chr> "[None]", "パーソルパリーグTV|パリーグTV|パシフィックリ…
-    ## $ view_count    <dbl> 778499, 1161952, 1980557, 2381688, 442524, 431031, 60000…
-    ## $ likes         <dbl> 34811, 18514, 63961, 146742, 14388, 6096, 714306, 8627, …
-    ## $ dislikes      <dbl> 667, 259, 692, 2794, 73, 123, 15176, 134, 572, 163, 420,…
-    ## $ comment_count <dbl> 3939, 4115, 6216, 16557, 1420, 607, 31040, 1781, 826, 14…
-    ## $ category      <fct> Blogs, Sports, Comedy, Gaming, Film, HowToD, Music, Blog…
+    ## $ tags          <chr> "clash diljit dosanjh|diljit dosanjh|diljit dosanjh goat…
+    ## $ view_count    <dbl> 9140911, 2038853, 2381688, 1514614, 1123889, 1050143, 75…
+    ## $ likes         <dbl> 296541, 353797, 146740, 156914, 45803, 89192, 8278, 1655…
+    ## $ dislikes      <dbl> 6180, 2628, 2794, 5857, 964, 855, 331, 4198, 1860, 5759,…
+    ## $ comment_count <dbl> 30059, 40222, 16549, 35331, 2198, 6455, 2441, 15777, 705…
+    ## $ category      <fct> Music, Entertainment, Gaming, Blogs, HowToD, Education, …
     ## $ trending_year <chr> "2020", "2020", "2020", "2020", "2020", "2020", "2020", …
 
 2-4. Check for NAs
@@ -163,7 +163,7 @@ We check NA now but not at the beginning because we don’t need to care
 about NAs in the columns that we don’t use.
 
 ``` r
-sum(is.na(JP_data)) # 0 NAs
+sum(is.na(CA_data)) # 0 NAs
 ```
 
     ## [1] 0
@@ -185,7 +185,7 @@ year between 2020 and present?
 ``` r
 # All category and all videos
 # no. times of trending of each category
-JP_channel_trending <- JP_data %>%
+CA_channel_trending <- CA_data %>%
   group_by(trending_year, category) %>%
   summarise(chtrending_n = n(),
             ch_views_sum = sum(view_count),
@@ -198,25 +198,26 @@ JP_channel_trending <- JP_data %>%
 
 ``` r
 # No. times of trending & total views
-ggplot(JP_channel_trending, aes(y = category, x = chtrending_n, fill = ch_views_sum)) +
+ggplot(CA_channel_trending, aes(y = category, x = chtrending_n, fill = ch_views_sum)) +
   geom_col() +
   facet_grid(. ~trending_year) +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
   labs(title = 'No. times of trending of each category (total views)',
-       x = 'No. times on Trending',
+       x = 'No. of times on Trending',
        y = 'Category')
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p01_trending-category-total-views-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p01_trending_category_total_views-1.png)<!-- -->
 
-Unlike US and Canada, which music is very outstanding, Entertainment is
-the most popular category in Japan from 2020 to 2022. Music is rather
-low. Blogs and Gaming is a big higher than Music.
+Entertainment & Gaming videos became popular from 2021. They both on
+trending most frequent and also have higher total views. Note that
+although music is the third on trending, it has higher or comparable
+total views to Entertainment and Gaming.
 
 ``` r
 # No. times of trending & average views per trending time
-ggplot(JP_channel_trending, aes(y = category, x = chtrending_n, fill = ch_views_avg)) +
+ggplot(CA_channel_trending, aes(y = category, x = chtrending_n, fill = ch_views_avg)) +
   geom_col() +
   facet_grid(. ~trending_year) +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
@@ -226,16 +227,16 @@ ggplot(JP_channel_trending, aes(y = category, x = chtrending_n, fill = ch_views_
        y = 'Category')
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p02_trending-category-avg-views-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p02_trending_category_avg_views-1.png)<!-- -->
 
-If look at average views per trending time, entertainment still has
-higher or comparable total views to Entertainment and Gaming.
+If look at average views per trending time, music still has higher or
+comparable total views to Entertainment and Gaming.
 
-What are the channels on trending for \>250 times?
+What are the channels on trending for \>200 times?
 
 ``` r
 # no. times of trending of each channel
-JP_channel_trending <- JP_data %>%
+CA_channel_trending <- CA_data %>%
   group_by(trending_year, channelTitle) %>%
   summarise(chtrending_n = n(),
             ch_views_sum = sum(view_count)) %>%
@@ -246,35 +247,34 @@ JP_channel_trending <- JP_data %>%
     ## `.groups` argument.
 
 ``` r
-# Channels on Trending for >250 times
-JP_channel_250trending <- JP_channel_trending %>%
+# Channels on Trending for >200 times
+CA_channel_200trending <- CA_channel_trending %>%
   arrange(desc(chtrending_n)) %>%
-  filter(chtrending_n > 250)
+  filter(chtrending_n > 200)
 
-# Fig 03 - Trending times do not correlate with # views
-ggplot(JP_channel_250trending, aes(y = channelTitle, x = chtrending_n, fill = ch_views_sum)) +
+# Trending times do not correlate with # views
+ggplot(CA_channel_200trending, aes(y = channelTitle, x = chtrending_n, fill = ch_views_sum)) +
   geom_col() +
   facet_grid(. ~trending_year) +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
-  theme_linedraw(base_family = "HiraKakuProN-W3") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'Channels on trending >250 times',
+  labs(title = 'Channels on trending >200 times',
        x = 'No. of times on trending',
-       y = 'YouTube Channels',
-       fill = 'Total Views')
+       y = 'YouTube Channels')
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p03_trending-channels-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p03_trending_channels-1.png)<!-- -->
 
-Although MrBeast’s channels “MrBeast” and “MrBeast Gaming” are very
-popular in North American and are on trending \>400 times, it is not
-popular at all in Japan.
+Sports channels are on trending most frequent from 2020 to 2022.
 
-Which videos are on trending for at least 3 weeks (21 days)?
+Note that both of MrBeast’s channels “MrBeast” and “MrBeast Gaming” were
+on trending \>400 times in 2021.
+
+Which videos are on trending for \>30 days?
 
 ``` r
-# Videos on Trending for >=21 times
-JPvideo_trending <- JP_data %>%
+# Videos on Trending for >30 days
+CAvideo_trending <- CA_data %>%
   group_by(title) %>%
   summarise(vtrending_n = n(),
             video_views_sum = sum(view_count),
@@ -282,50 +282,38 @@ JPvideo_trending <- JP_data %>%
             channelTitle = last(channelTitle)) %>%
   as.data.frame()
 
-JP_video_20trending <- JPvideo_trending %>%
+CA_video_30trending <- CAvideo_trending %>%
   arrange(desc(vtrending_n)) %>%
-  filter(vtrending_n > 20)
+  filter(vtrending_n > 30)
 
-JP_video_20trending
+CA_video_30trending
 ```
 
-    ##                                                        title vtrending_n
-    ## 1                                                     ご報告          51
-    ## 2                                         ご報告があります。          30
-    ## 3    Ｐ丸様が授業をした結果WWWWWWWWW【Ｐ丸様。】【すとぷり】          21
-    ## 4 あなたが落としたのはこのアホですか？【ジェル】【すとぷり】          21
-    ## 5                                               彼氏について          21
-    ## 6                                               試合を終えて          21
-    ##   video_views_sum      category                channelTitle
-    ## 1        72161477         Blogs                社畜OLちえ丸
-    ## 2         8694165 Entertainment カズチャンネル/Kazu Channel
-    ## 3        28959973 Entertainment            ジェルちゃんねる
-    ## 4        26185568 Entertainment                     P丸様。
-    ## 5        41091834 Entertainment            中町綾チャンネル
-    ## 6        54215996 Entertainment     朝倉未来 Mikuru Asakura
+    ##              title vtrending_n video_views_sum category channelTitle
+    ## 1 Starlink Mission         101        78914625  Science       SpaceX
 
-The video on trending most frequent is a …. 社畜OL的生活頻道。
+SpaceX’s Starlink Mission is the one on Trending most frequent.
 
 #### 3-1-2. Highest views
 
 Now, we only select the top 100 videos with highest views.
 
 ``` r
-# rank Japan videos with top 100 highest views from 2020 to 2022
+# rank Canada videos with top 100 highest views from 2020 to 2022
 # total 100 videos
-JP_channel_top100 <- JP_data %>%
+CA_channel_top100 <- CA_data %>%
   arrange(desc(view_count)) %>%
   slice(1:100)
 
-# rank Japan videos with top 100 highest views from 2020 to 2022
+# rank Canada channels with top 100 highest views from 2020 to 2022
 # total 300 videos = 100 videos per year
-JP_channel_top100_year <- JP_data %>%
+CA_channel_top100_year <- CA_data %>%
   group_by(trending_year) %>%
   arrange(desc(view_count)) %>%
   slice(1:100)
 
 # Category of highest views
-JP_category_views <- JP_channel_top100_year %>%
+CA_category_views <- CA_channel_top100_year %>%
   group_by(category, trending_year) %>%
   summarise(n_cat_views = n(),
             avg_views = sum(view_count) / n_cat_views) %>%
@@ -337,54 +325,56 @@ JP_category_views <- JP_channel_top100_year %>%
 
 ``` r
 # Top 100 views videos are Music and Entertainment
-ggplot(JP_category_views, aes(y = category, x = n_cat_views, fill = avg_views)) +
+ggplot(CA_category_views, aes(y = category, x = n_cat_views, fill = avg_views)) +
   geom_col() +
   facet_grid(. ~trending_year) +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  theme_linedraw(base_family = "HiraKakuProN-W3") +
   labs(title = 'Category of videos with top 100 views (2020 - present)',
        x = '# of trending videos in top 100 views',
-       y = 'YouTube Category')
+       y = 'YouTube Category',
+       color = "Avg views")
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p04_trending-category-top100-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p03_channels_top100views-1.png)<!-- -->
 
-From 2020 to 2022, most popular videos are all music.
+In 2020, most popular videos are music, then shift to Entertainmen in
+2021. Two most popular categories in 2022 are News and music.
 
 ``` r
 # Channels with videos of top 100 views: Higher views do not correlate with more likes
-ggplot(JP_channel_top100, aes(y = channelTitle, x = view_count, alpha = likes)) +
+ggplot(CA_channel_top100, aes(y = title, x = view_count, alpha = likes)) +
   geom_point(color = "blue") +
-  theme_linedraw(base_family = "HiraKakuProN-W3") +
+  theme_linedraw(base_family = "NanumGothic") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'Japan YouTube Channels with higest top 100 views',
-       x = '# of viewss',
-       y = 'YouTube Channels')
+  labs(title = 'Top 100 Canadian YouTube videos with higest views',
+       x = '# of views',
+       y = 'YouTube videos')
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p05_trending-channels-top100-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p04_channels_top100views-1.png)<!-- -->
 
-Most popular channels with highest views are BLACK PINK and BTS.
+Black Pink has the highest views.
+
+FFUNTV are mostly shorts!
 
 Big Hit Labels is the former name of HYBE LABELS, which is the company
 that BTS is belonged to.
 
 ``` r
 # Top 100 viewed videos: Higher views do not correlate with more likes
-ggplot(JP_channel_top100, aes(y = title, x = view_count, alpha = likes)) +
+ggplot(CA_channel_top100, aes(y = title, x = view_count, alpha = likes)) +
   geom_point(color = "blue") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-        plot.title = element_text(hjust = -1)) + 
-  theme_bw(base_family = "NanumGothic") +
-  labs(title = 'Top 100 Japan YouTube videos with higest views',
+  theme_linedraw(base_family = "NanumGothic") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
+  labs(title = 'Top 100 Canadian YouTube videos with higest views',
        x = '# of views',
        y = 'YouTube videos')
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p06_top100-viewed-videos-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p05_videos_top100views-1.png)<!-- -->
 
-9 / 15 videos of highest views are BTS and Black PINK!
+4 / 15 videos of highest views are BTS, Black Pink and shorts.
 
 ### 3-1-3. Paid by ad views
 
@@ -400,27 +390,26 @@ Stats)](https://www.thinkific.com/blog/youtube-money-per-view/)
 ``` r
 ## Paid by views of each channel
 # All category
-JPchannel_pay <- JP_data %>%
+CAchannel_pay <- CA_data %>%
   group_by(channelTitle) %>%
   summarise(view_sum = sum(view_count),
             USD_pay_in_k = (view_sum /1000 * 5)/100 ) %>%
   arrange(desc(USD_pay_in_k)) %>%
   slice(1:20)
 
-ggplot(JPchannel_pay, aes(y = channelTitle, x = USD_pay_in_k, fill = view_sum)) +
+ggplot(CAchannel_pay, aes(y = channelTitle, x = USD_pay_in_k, fill = view_sum)) +
   geom_col() +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
-  theme_linedraw(base_family = "HiraKakuProN-W3") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'Amount of top view channel got paid',
+  labs(title = 'Canadian YouTube channels earned (per 1000 views)',
        x = 'USD (per 1000 dollars)',
-       y = 'Category')
+       y = 'Category',
+       fill = "Total views")
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p07_top20-paid-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p06_channels_paid-1.png)<!-- -->
 
-Different from the US and Canada, MrBeast is not popular in Japan. SM
-TOMN, JYP Entertainment and HYBE LABELS are Korean agency companies.
+MrBeast earns lots of money!
 
 ### 3-2. Channels with excluded categories
 
@@ -428,22 +417,21 @@ Because channels with high views are music, movies, sports, TV shows, we
 want to exclude those to see what types of channels give higher views.
 
 ``` r
-## Exclude music, films, sports, etc
 # list of commercials to be excluded
 comm_ch_list <- c("HYBE LABELS", "starshipTV", "Stone Music Entertainment", 
                   "NPR Music", "Navrattan Music", "Strange Music Inc",
                   "Zee Music Company", "Desi Music Factory", "MTV",
-                  "Paramount Pictures", "Warner Bros. Pictures", "Sony Pictures Entertainment",
-                  "Universal Pictures", "Magnolia Pictures & Magnet Releasing",
-                  "Orion Pictures", "Marvel Entertainment", "JYP Entertainment", "Big Hit Labels",
-                  "Apple", "amazon",  "T-Mobile", "Samsung Mobile USA", "Google")
+               "Paramount Pictures", "Warner Bros. Pictures", "Sony Pictures Entertainment",
+               "Universal Pictures", "Magnolia Pictures & Magnet Releasing",
+               "Orion Pictures", "Marvel Entertainment", "JYP Entertainment", "Big Hit Labels",
+               "Apple", "amazon",  "T-Mobile", "Samsung Mobile USA", "Google")
 
 comm_title_list <- c("Music Video", "Official Video", "Official Music Video", "Official Lyric Video",
-                     "Official Audio", "Official MV", "Official Teaser", "Shorts", "shorts",
-                     "SHORTS", "Trailer", "TRAILER", "Teaser Video", "TEASER", "M/V", "MV", "Video Oficial")
+                  "Official Audio", "Oficial", "Official MV", "Official Teaser", "Shorts", "shorts",
+                  "SHORTS", "Trailer", "TRAILER", "Teaser Video", "TEASER", "M/V", "MV")
 
 ## Exclude music, films, sports, etc
-JP_nocomm <- JP_data %>%
+CA_nocomm <- CA_data %>%
   filter(categoryId != 2 & categoryId != 17 & categoryId != 25 & categoryId != 43) %>%
   filter(!grepl(paste(comm_title_list, collapse = "|"), title)) %>%
   filter(!grepl(paste(comm_ch_list, collapse = "|"), channelTitle)) %>%
@@ -456,7 +444,7 @@ Which category is most popular? (i.e., on trending most often)
 
 ``` r
 # No. times of trending of each category
-JP_personal_trending <- JP_nocomm %>%
+CA_nocomm_trending<- CA_nocomm %>%
   group_by(category, trending_year) %>%
   summarise(n_personal_trending = n(),
             avg_views = sum(view_count) / n_personal_trending) %>%
@@ -467,19 +455,19 @@ JP_personal_trending <- JP_nocomm %>%
     ## `.groups` argument.
 
 ``` r
-ggplot(JP_personal_trending, aes(y = category, x = n_personal_trending, fill = avg_views)) +
+ggplot(CA_nocomm_trending, aes(y = category, x = n_personal_trending, fill = avg_views)) +
   geom_col() +
   facet_grid(. ~trending_year) +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'Top 100 Japan YouTube videos with higest views',
+  labs(title = 'All Canadian YouTube videos',
        subtitle = 'Film, music, TV channels, commercials, shorts are excluded',
        x = 'No. of times on Trending',
        y = 'Category',
-       fill = "Average views")
+       fill = "Avg views")
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p08_ex-trending-category-avg-views-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p07_ex-category-trending-avg-views-1.png)<!-- -->
 
 Gaming and Entertainment (personal, not commercial) became very popular
 since 2021.
@@ -491,13 +479,13 @@ What are the categories with most highest views?
 ``` r
 # Personal videos of top 100 videos of each year
 # total = 300 videos
-JP_nocomm_top100_year <- JP_nocomm %>%
+CA_nocomm_top100_year <- CA_nocomm %>%
   group_by(trending_year) %>%
   arrange(desc(view_count)) %>%
   slice(1:100)
 
 # Category of highest views
-JP_personal_top100_bycat <- JP_nocomm_top100_year %>%
+CA_nocomm_top100_catyear <- CA_nocomm_top100_year %>%
   group_by(category, trending_year) %>%
   summarise(n_per_cat_views = n(),
             avg_percat_views = sum(view_count) / n_per_cat_views) %>%
@@ -508,97 +496,93 @@ JP_personal_top100_bycat <- JP_nocomm_top100_year %>%
     ## `.groups` argument.
 
 ``` r
-ggplot(JP_personal_top100_bycat, aes(y = category, x = n_per_cat_views, fill = avg_percat_views)) +
+ggplot(CA_nocomm_top100_catyear, aes(y = category, x = n_per_cat_views, fill = avg_percat_views)) +
   geom_col() +
   facet_grid(. ~trending_year) +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'No. times of trending of Japan YouTube videos with top 100 higest views',
+  labs(title = 'No. times of trending of Canadian YouTube videos with top 100 higest views',
        subtitle = 'Film, music, TV channels, commercials, shorts are excluded',
        x = 'No. times on Trending',
        y = 'Category',
-       fill = "Average views")
+       fill = "Avg views")
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p09_ex-category-top100views-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p08_ex-category-top100views-1.png)<!-- -->
 
 Entertainment is the one with highest views from 2020 to 2022.
 
 What are the channels of top 100 videos with highest views?
 
 ``` r
-# Fig 10 - Channels of top 100 views videos
+# Personal videos of top 45 videos of each year
+# total = 135 videos
+CA_nocomm_top50_year <- CA_nocomm %>%
+  group_by(trending_year) %>%
+  arrange(desc(view_count)) %>%
+  slice(1:45)
+
+# Channels of top 50 views videos of each year
 # exclude shorts & commercials
-ggplot(JP_nocomm_top100_year, aes(y = channelTitle, x = view_count, alpha = likes, color = trending_year)) +
+ggplot(CA_nocomm_top50_year, aes(y = channelTitle, x = view_count, alpha = likes, color = trending_year)) +
   geom_point() +
-  facet_grid(.~trending_year) +
-  theme_linedraw(base_family = "HiraKakuProN-W3") +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'Top 100 Japan YouTube videos with higest views',
+  theme(axis.text.x = element_text(size = 6),
+        axis.text.y = element_text(size = 6)) + 
+  facet_grid(. ~trending_year) +
+  theme_linedraw(base_family = "NanumGothic") +
+  labs(title = 'Top 45 Canadian YouTube Channels with higest views of each year',
        subtitle = 'Film, music, TV channels, commercials, shorts are excluded',
        x = '# of views',
        y = 'YouTube channels',
        color = "Trending year")
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p10_ex-trending-channels-top100views-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p09_ex-channels-top100views-1.png)<!-- -->
 
-Black Pink has the highest views in 2021 & 2022.
+MrBeast has the highest views in 2021
 
 What are the vidoes with highest views?
 
 ``` r
 # Top 100 highest views of total excl. videos
 # total = 100 videos in 3 years
-JP_nocomm_top100_view <-JP_nocomm %>%
+CA_nocomm_top100_view <-CA_nocomm %>%
   arrange(desc(view_count)) %>%
   slice(1:100)
 
 # Videos of top 100 highest views
 # No. times on trending
-JP_nocomm_top100_view_ntrending <- JP_nocomm_top100_view %>%
+CA_nocomm_top100_view_ntrending <- CA_nocomm_top100_view %>%
   group_by(title) %>%
   summarise(channelTitle = first(channelTitle),
             v_ntrending = n(),
             sum_view = sum(view_count)) %>%
   arrange(desc(v_ntrending))
 
-head(JP_nocomm_top100_view_ntrending)
+View(CA_nocomm_top100_view_ntrending)
 ```
-
-    ## # A tibble: 6 × 4
-    ##   title                                                  chann…¹ v_ntr…² sum_v…³
-    ##   <chr>                                                  <chr>     <int>   <dbl>
-    ## 1 [CHOREOGRAPHY] BTS (방탄소년단) 'Butter' Special Perf… BANGTA…      15  5.40e8
-    ## 2 [CHOREOGRAPHY] BTS (방탄소년단) 'Butter' Dance Practi… BANGTA…      12  3.82e8
-    ## 3 BTS (방탄소년단) 'Butter' @ Billboard Music Awards     BANGTA…       8  3.06e8
-    ## 4 LISA - 'MONEY' EXCLUSIVE PERFORMANCE VIDEO             BLACKP…       7  3.20e8
-    ## 5 BLACKPINK - ‘Pink Venom’ DANCE PRACTICE VIDEO          BLACKP…       6  2.24e8
-    ## 6 Kendrick Lamar - The Heart Part 5                      Kendri…       6  1.58e8
-    ## # … with abbreviated variable names ¹​channelTitle, ²​v_ntrending, ³​sum_view
 
 #### 3-2-3. Paid by ad views
 
 Which channels make most money?
 
 ``` r
-JP_personal_paytop20 <- JP_nocomm %>%
+CA_nocomm_paytop20 <- CA_nocomm %>%
   group_by(channelTitle) %>%
   summarise(personal_views = sum(view_count),
             personal_pay_in_k = (personal_views / 1000 * 5)/1000) %>%
   arrange(desc(personal_pay_in_k)) %>%
   slice(1:20)
 
-ggplot(JP_personal_paytop20, aes(y = channelTitle, x = personal_pay_in_k, fill = personal_views)) +
+ggplot(CA_nocomm_paytop20, aes(y = channelTitle, x = personal_pay_in_k, fill = personal_views)) +
   geom_col() +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
-  theme_linedraw(base_family = "HiraKakuProN-W3") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'Japan YouTube channels earned (per 1000 views)',
+  labs(title = 'Canadian YouTube channels earned (per 1000 views)',
        subtitle = 'Film, music, TV channels, commercials, shorts are excluded',
        x = 'USD (per 1000 dollars)',
        y = 'Category',
-       fill = "Views")
+       fill = "Total views")
 ```
 
-![](2022-10-29-YT-JP-trending_files/figure-gfm/p12_ex-top20-paid-1.png)<!-- -->
+![](2022-10-20-YT_CA_trending_files/figure-gfm/p10_ex-channels-paid-1.png)<!-- -->
