@@ -183,7 +183,7 @@ Which category is most popular (i.e., on trending most frequent) each
 year between 2020 and present?
 
 ``` r
-# no. times of trending of each category
+# no. times on trending of each category
 US_channel_trending <- US_data %>%
   group_by(trending_year, category) %>%
   summarise(chtrending_n = n(),
@@ -196,18 +196,18 @@ US_channel_trending <- US_data %>%
     ## `.groups` argument.
 
 ``` r
-# No. times of trending & total views
+# No. times on trending & total views
 ggplot(US_channel_trending, aes(y = category, x = chtrending_n, fill = ch_views_sum)) +
   geom_col() +
   facet_grid(. ~trending_year) +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'No. times of trending of each category (total views)',
-       x = 'No. times on Trending',
+  labs(title = 'No. times on trending of each category (total views)',
+       x = '# times on Trending',
        y = 'Category')
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p1%20-%20trending%20category%20total%20views-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p01_trending-category-total-views-1.png)<!-- -->
 
 Entertainment & Gaming videos became popular from 2021. They both on
 trending most frequent and also have higher total views. Note that
@@ -215,18 +215,18 @@ although music is the third on trending, it has higher or comparable
 total views to Entertainment and Gaming.
 
 ``` r
-# No. times of trending & average views per trending time
+# No. times trending & average views per trending time
 ggplot(US_channel_trending, aes(y = category, x = chtrending_n, fill = ch_views_avg)) +
   geom_col() +
   facet_grid(. ~trending_year) +
   scale_fill_gradient(low = "light blue", high = "dark blue") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
-  labs(title = 'No. times of trending of each category (average views)',
-       x = 'No. of times on Trending',
+  labs(title = 'No. times on trending of each category (average views)',
+       x = '# times on Trending',
        y = 'Category')
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p2%20-%20trending%20category%20avg%20views-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p02_trending-category-avg-views-1.png)<!-- -->
 
 If look at average views per trending time, music still has higher or
 comparable total views to Entertainment and Gaming.
@@ -234,7 +234,7 @@ comparable total views to Entertainment and Gaming.
 What are the channels on trending for \>200 times?
 
 ``` r
-# no. times of trending of each channel
+# no. times on trending of each channel
 US_channel_trending <- US_data %>%
   group_by(trending_year, channelTitle) %>%
   summarise(chtrending_n = n(),
@@ -258,21 +258,21 @@ ggplot(US_channel_200trending, aes(y = channelTitle, x = chtrending_n, fill = ch
   scale_fill_gradient(low = "light blue", high = "dark blue") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + 
   labs(title = 'Channels on trending >200 times',
-       x = 'No. of times on trending',
+       x = '# times on trending',
        y = 'YouTube Channels')
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p3%20-%20trending%20channels-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p03_trending-channels-1.png)<!-- -->
 
 Sports channels are on trending most frequent from 2020 to 2022.
 
 Note that both of MrBeast’s channels “MrBeast” and “MrBeast Gaming” were
 on trending \>400 times in 2021.
 
-Which videos are on trending for \>30 times?
+Which videos are on trending for more than a month?
 
 ``` r
-# Videos on Trending for >30 times
+# Videos on Trending for >30 days
 USvideo_trending <- US_data %>%
   group_by(title) %>%
   summarise(vtrending_n = n(),
@@ -358,7 +358,7 @@ ggplot(US_category_views, aes(y = category, x = n_cat_views, fill = avg_views)) 
        y = 'YouTube Category')
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p4%20-%20trending%20categoyr%20top100-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p04_trending-categoyr-top100-1.png)<!-- -->
 
 In 2020, most popular videos are music, then shift to Entertainmen in
 2021. Two most popular categories in 2022 are News and music.
@@ -373,7 +373,7 @@ ggplot(US_channel_top100, aes(y = channelTitle, x = view_count, alpha = likes)) 
        y = 'YouTube Channels')
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p5%20-%20trending%20channels%20top100-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p05_trending-channels-top100-1.png)<!-- -->
 
 Black Pink has the highest views.
 
@@ -394,7 +394,7 @@ ggplot(US_channel_top100, aes(y = title, x = view_count, alpha = likes)) +
        y = 'YouTube videos')
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p6%20-%20top100%20viewed%20videos-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p6_top100-viewed-videos-1.png)<!-- -->
 
 4 / 15 videos of highest views are BTS, Black Pink and shorts.
 
@@ -428,7 +428,7 @@ ggplot(USchannel_pay, aes(y = channelTitle, x = USD_pay_in_k, fill = view_sum)) 
        y = 'Category')
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p7%20-%20top20%20paid-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p07_top20-paid-1.png)<!-- -->
 
 MrBeast earns lots of money!
 
@@ -489,7 +489,7 @@ ggplot(US_personal_trending, aes(y = category, x = n_personal_trending, fill = a
        fill = "Average views")
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p8%20-%20ex%20trending%20category%20avg%20views-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p08_ex-trending-category-avg-views-1.png)<!-- -->
 
 Gaming and Entertainment (personal, not commercial) became very popular
 since 2021.
@@ -530,7 +530,7 @@ ggplot(US_personal_top100_bycat, aes(y = category, x = n_per_cat_views, fill = a
        fill = "Average views")
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p9%20-%20excategory%20top100%20views-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p09_ex-category-top100-views-1.png)<!-- -->
 
 Entertainment is the one with highest views from 2020 to 2022.
 
@@ -555,7 +555,7 @@ ggplot(US_nocomm_top100views, aes(y = channelTitle, x = view_count, alpha = like
        color = "Trending year")
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p10%20-%20ex%20trending%20channels%20top100%20views-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p10_ex-trending-channels-top100views-1.png)<!-- -->
 
 MrBeast has the highest views in 2021
 
@@ -574,7 +574,7 @@ ggplot(US_nocomm_top100views, aes(y = channelTitle, x = view_count, alpha = like
        color = "Trending year")
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p11%20-%20ex%20channels%20top100%20views-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p11_ex-channels-top100views-1.png)<!-- -->
 
 #### 3-2-3. Paid by ad views
 
@@ -599,4 +599,4 @@ ggplot(US_personal_paytop20, aes(y = channelTitle, x = personal_pay_in_k, fill =
        fill = "Views")
 ```
 
-![](2022-10-16-YT-US-trending_files/figure-gfm/p12%20-%20ex%20top20%20paid-1.png)<!-- -->
+![](2022-10-16-YT-US-trending_files/figure-gfm/p12_ex-top20-paid-1.png)<!-- -->
